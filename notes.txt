@@ -1,0 +1,43 @@
+settings.py
+------------------
+import os
+
+TEMPLATE_DIR=os.path.join(BASE_DIR,'template')
+
+STATIC_ROOT=os.path.join(BASE_DIR,'staticfiles')
+
+pip install whitenoise
+
+register
+
+middleware[
+"whitenoise.middleware.WhiteNoiseMiddleware",
+]
+
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+
+from django.contrib import admin
+from django.urls import path,include
+from django.conf import settings
+from django.conf.urls.static import static
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('',include('myapp.urls'))
+
+]
+
+urlpatterns+=static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)
+
+ALLOWED_HOST=['*']
+
+wsgi.py
+
+app=application
+
+vercel.json
+
+https://github.com/kashichavan/mypro/blob/main/vercel.json
+
+pip freeze > requirements.txt
